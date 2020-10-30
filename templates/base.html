@@ -35,7 +35,11 @@
         <li class="nav-item">
           <a class="nav-link" href="/best/">Top Customers</a>
         </li>
-
+        
+          <li class="nav-item">
+            <input type="text" id="txtName" placeholder="Search for customer" />
+            <a href="javascript:;" onclick="this.href='/customers/search?name=' + document.getElementById('txtName').value">Send</a>
+      </li>
       </ul>
     </div>
   </nav>
@@ -45,6 +49,7 @@
 
   <div id="content" style="margin-top: 80px">
     {% block content %}{% endblock %}
+  
   </div>
 
 </div>

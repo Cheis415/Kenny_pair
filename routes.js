@@ -44,6 +44,27 @@ router.post("/add/", async function (req, res, next) {
   }
 });
 
+router.get("/best/", async function (req, res, next) {
+  debugger;
+  try {
+    const customers = await Customer.bestCustomer();
+    return res.render("customer_list.html", { customers });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+// router.post(":id/fullName", async function (req, res, next) {
+//   try {
+//     const customer = await Customer.getCustomer(req.body.fullName);
+//     const reservations = await customer.getReservations();
+    
+//     return res.redirect(`/${customer.id}/`);
+//   } catch (err) {
+//     return next(err);
+//   }
+// });
+
 /** Show a customer, given their ID. */
 
 router.get("/:id/", async function (req, res, next) {
@@ -110,25 +131,6 @@ router.post("/:id/add-reservation/", async function (req, res, next) {
   }
 });
 
-router.get("/:fullname/", async function (req, res, next) {
-  try {
-    const customer = await Customer.get(req.params.fullname);
 
-    const reservations = await customer.getReservations();
 
-    return res.render("customer_detail.html", { customer, reservations });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-router.get("/best/", async function (req, res, next) {
-  try {
-    const customers = await Customer.bestCustomer();
-    return res.render("customer_list.html", { customers });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-module.exports = router;
+ module.exports = router;

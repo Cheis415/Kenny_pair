@@ -105,15 +105,19 @@ class Customer {
     }
     return new Customer(customer);
   }
-  async bestCustomer(){
-    const result = await db.query(
-          `SELECT *
+  static async bestCustomer(){
+    const results = await db.query(
+          `SELECT customers.id,
+                  first_name AS "firstName",
+                  last_name  AS "lastName",
+                  phone,
+                  customers.notes
            FROM customers
-           JOIN on id = reservation.customer_id
-           GROUP BY COUNT(reservation.customer_id)
-           ORDER BY DESC
+           JOIN reservations on customers.id = reservations.customer_id
+           GROUP BY customers.id, reservations.id
+           ORDER BY COUNT(reservations.customer_id) DESC
            LIMIT 10`)
-    const customerList = result.rows;
+    return results.rows.map(c => new Customer(c));
   }
 }
 
