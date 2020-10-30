@@ -29,7 +29,7 @@ class Customer {
            FROM customers
            ORDER BY last_name, first_name`,
     );
-    return results.rows.map(c => new Customer(c)); //different than the lecture?? 
+    return results.rows.map(c => new Customer(c)); //different than the lecture??
   }
 
   /** get a customer by ID. */
@@ -90,6 +90,30 @@ class Customer {
           ],
       );
     }
+  }
+  static async getCustomer(fullName){
+    const result = await db.query(`SELECT id
+                    FROM customers
+                    WHERE fullName = $1`,
+                    [this.fullName])
+    const customer = result.rows[0];
+
+    if (customer === undefined) {
+      const err = new Error(`No such customer: ${fullName}`);
+      err.status = 404;
+      throw err;
+    }
+    return new Customer(customer);
+  }
+  async bestCustomer(){
+    const result = await db.query(
+          `SELECT *
+           FROM customers
+           JOIN on id = reservation.customer_id
+           GROUP BY COUNT(reservation.customer_id)
+           ORDER BY DESC
+           LIMIT 10`)
+    const customerList = result.rows;
   }
 }
 
