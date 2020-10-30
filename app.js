@@ -11,7 +11,7 @@ const { NotFoundError } = require("./expressError");
 const app = new Express();
 
 // Parse body for urlencoded (non-JSON) data
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false })); //???? What is body parser?
 
 nunjucks.configure("templates", {
   autoescape: true,

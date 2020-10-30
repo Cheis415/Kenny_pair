@@ -12,6 +12,7 @@ class Customer {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.fullName = `${this.firstName} ${this.lastName}`
     this.phone = phone;
     this.notes = notes;
   }
@@ -28,7 +29,7 @@ class Customer {
            FROM customers
            ORDER BY last_name, first_name`,
     );
-    return results.rows.map(c => new Customer(c));
+    return results.rows.map(c => new Customer(c)); //different than the lecture?? 
   }
 
   /** get a customer by ID. */
